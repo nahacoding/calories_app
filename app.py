@@ -38,8 +38,15 @@ if st.button("🔥 AI 분석 결과 보기", use_container_width=True):
     # 입력 데이터를 모델 형식에 맞게 변환
     input_data = np.array([[steps, very_active, fairly_active, lightly_active, sedentary]]) 
     prediction = float(model.predict(input_data)[0]) # 숫자형으로 변환
+
     
     st.divider()
+
+    # --- 칼로리 값 빨간색 적용 부분 ---
+    st.markdown(
+        f"### ✅ 예측 소모 칼로리: <span style='color: #FF4B4B;'>{prediction[0]:.1f} kcal</span>", 
+        unsafe_allow_html=True
+    )
     
     # --- 게이지 차트 시각화 (중앙 배치) ---
     fig = go.Figure(go.Indicator(
@@ -80,4 +87,5 @@ if st.button("🔥 AI 분석 결과 보기", use_container_width=True):
     # 4. 하단 주의 문구
     st.divider()
     st.caption("⚠️ 주의사항: 본 서비스의 분석 결과는 입력된 데이터를 기반으로 한 AI 예측치이며, 사용자의 기초대사량, 체질, 건강 상태에 따라 실제 소모량과 차이가 있을 수 있습니다. 참고용으로만 활용해 주세요.")
+
 
