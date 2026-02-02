@@ -1,5 +1,7 @@
 streamlit
 Orange3
 pandas
+plotly
 numpy
+
 scikit-learn
