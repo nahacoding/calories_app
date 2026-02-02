@@ -2,6 +2,7 @@ import streamlit as st
 import pickle
 import numpy as np
 import pandas as pd
+import altair as alt  # 그래프 세부 설정을 위해 추가
 
 # 1. 페이지 설정 및 제목 수정
 st.set_page_config(page_title="AI 하루", layout="centered") 
@@ -40,12 +41,11 @@ if st.button("🔥 AI 분석 결과 보기", use_container_width=True):
     
     st.divider()
     
-    # --- 칼로리 값 빨간색 적용 부분 ---
+    # 칼로리 값 빨간색 적용
     st.markdown(
         f"### ✅ 예측 소모 칼로리: <span style='color: #FF4B4B;'>{prediction[0]:.1f} kcal</span>", 
         unsafe_allow_html=True
     )
-    # ------------------------------
 
     # 분석 코멘트
     if prediction[0] > 2500:
@@ -55,16 +55,22 @@ if st.button("🔥 AI 분석 결과 보기", use_container_width=True):
     else:
         st.warning("오늘은 조금 더 움직여보는 건 어떨까요? 가벼운 산책을 추천합니다.")
 
-    # 4. 하단 그래프 시각화
+    # 4. 하단 그래프 시각화 (초록색 계열 & 가로 라벨)
     st.write("")
     st.subheader("⏱ 활동 시간 비중 분석")
     
     chart_data = pd.DataFrame({
-        "활동 유형": ["고강도", "중강도", "저강도", "좌식(비활동)"],
-        "시간(분)": [very_active, fairly_active, lightly_active, sedentary]
+        "활동유형": ["고강도", "중강도", "저강도", "좌식"],
+        "시간": [very_active, fairly_active, lightly_active, sedentary]
     })
     
-    st.bar_chart(data=chart_data, x="활동 유형", y="시간(분)", color="#ff4b4b")
+    # Altair를 이용한 커스텀 차트
+    chart = alt.Chart(chart_data).mark_bar(color='#2ecc71').encode(
+        x=alt.X('활동유형:N', axis=alt.Axis(labelAngle=0)), # labelAngle=0으로 가로 정렬
+        y='시간:Q'
+    ).properties(width='container', height=300)
+    
+    st.altair_chart(chart, use_container_width=True)
     
     # 5. 주의 문구 추가
     st.divider()
