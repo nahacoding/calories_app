@@ -1,5 +1,4 @@
 orange3
-Orange3-dist
 chardet
 streamlit
 pandas
@@ -7,6 +6,7 @@ plotly
 numpy
 
 scikit-learn
+
 
 
 
