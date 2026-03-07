@@ -1,9 +1,10 @@
-streamlit
 Orange3
+chardet
+streamlit
 pandas
 plotly
 numpy
 
 scikit-learn
 
-chardet
+
